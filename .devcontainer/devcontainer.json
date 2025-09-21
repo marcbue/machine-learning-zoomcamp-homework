@@ -30,5 +30,5 @@
   
     "postCreateCommand": "uv sync --locked || uv sync",
   
-    "postStartCommand": "sh -lc \"git config --system --get-all safe.directory | grep -qx '/workspaces/ml_zoomcamp' || git config --system --add safe.directory /workspaces/ml_zoomcamp || true\""
+    "postStartCommand": "chown -R root:root /root/.ssh && chmod 700 /root/.ssh && chmod 600 /root/.ssh/config && chmod 600 /root/.ssh/id_* 2>/dev/null && chmod 644 /root/.ssh/*.pub 2>/dev/null; git config --system --get-all safe.directory | grep -qx '/workspaces/ml_zoomcamp' || git config --system --add safe.directory /workspaces/ml_zoomcamp || true"
 }
