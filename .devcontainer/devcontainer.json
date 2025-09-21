@@ -1,0 +1,34 @@
+{
+    "name": "ml_zoomcamp",
+    "build": { "dockerfile": "Dockerfile" },
+    "workspaceFolder": "/workspaces/ml_zoomcamp",
+  
+    "mounts": [
+      "type=bind,source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent",
+      "source=${localWorkspaceFolder},target=/workspaces/ml_zoomcamp,type=bind,consistency=cached",
+      "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached",
+      "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+    ],
+  
+    "remoteEnv": { "SSH_AUTH_SOCK": "/ssh-agent" },
+  
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-python.vscode-pylance",
+          "ms-toolsai.jupyter",
+          "ms-azuretools.vscode-docker",
+          "charliermarsh.ruff",
+          "GitHub.vscode-pull-request-github"
+        ],
+        "settings": {
+          "python.defaultInterpreterPath": "/workspaces/ml_zoomcamp/.venv/bin/python"
+        }
+      }
+    },
+  
+    "postCreateCommand": "uv sync --locked || uv sync",
+  
+    "postStartCommand": "sh -lc \"git config --system --get-all safe.directory | grep -qx '/workspaces/ml_zoomcamp' || git config --system --add safe.directory /workspaces/ml_zoomcamp || true\""
+}
